@@ -368,12 +368,12 @@ weeks:[["Understand the site and write user stories"],["Static testing and maste
 assumptions:["The test environment is available and stable.","Test data and accounts are ready before execution.","The site works as described in the user stories.","All members are available during the 9 weeks."],
 constraints:["Total duration is 9 weeks.","The practice site is public, so its data may reset.","Only free tools are used.","A limited number of mobile devices is available."],
 links:{ // paste Drive links between the quotes; empty = "Link coming soon"
-"Main project folder":"","User stories":"","Master test plan":"","Test plans per user story":"",
-"Test cases: Web":"","Test cases: Mobile":"","Test cases: API":"","Database scripts":"","Automation scripts":"","Bug reports":"",
-"Summary report: Web":"","Summary report: Mobile":"","Summary report: API":"","Summary report: Database":"","Summary report: Automation":"","Final summary report":""},
+"Main project folder":"https://drive.google.com/drive/folders/1FNrVd46Q0iLoP8Q518397K8_A3rHbZWd","User stories":"https://drive.google.com/drive/folders/17wDwNz-6cpEi7Cy1X4UhtFshbFBPekqs","Master test plan":"","Test plans per user story":"",
+"Test cases: Web":"https://drive.google.com/drive/folders/1w5kEHTOokHahoeJZqacoKjYc22zmQa3y","Test cases: Mobile":"https://drive.google.com/drive/folders/1feKE4rnP-GgMon6QUF8pqUzpG83JbuEQ","Test cases: API":"","Database scripts":"","Automation scripts":"https://github.com/Joe-destructive/Graduation_Project_Automation","Bug reports":"https://drive.google.com/drive/folders/1TkZs3ln9XwYR8TdqtzhSly2sZJXgg-8t",
+"Summary report: Web":"","Summary report: Mobile":"","Summary report: API":"","Summary report: Database":"","Summary report: Automation":"","Final summary report":"https://drive.google.com/drive/folders/1OT46i0WmxRzfvy3G-TzuWFbqFYbqv6Rp"},
 sum:{stories:8,cases:null,bugs:null,passed:null,failed:null,blocked:null},
 sample:false, // shows a "sample numbers" note; set to false after you enter the real numbers
-results:[["Web",995,null,null,null,null],["Mobile app",626,null,null,null,null],["API",null,null,null,null,null],["Database",null,null,null,null,null],["Automation",null,null,null,null,null]] // each row: area, test cases, passed, failed, blocked, bugs (null = not filled yet)
+results:[["Web",995,578,102,10,45],["Mobile app",626,null,null,null,8],["API",null,null,null,null,null],["Database",null,null,null,null,null],["Automation (TestNG run)",40,29,5,6,null]] // each row: area, test cases, passed, failed, blocked, bugs (null = not filled yet)
 };
 /* ===== END OF CONFIG ===== */
 const TM=["Dawn","Sunrise","Morning","Midday","Overcast","Rain","Golden hour","Sunset"];
@@ -437,7 +437,7 @@ ${nodes}</svg></div></div></section>`},
 ()=>`<h3>Project duration: 9 weeks</h3><div class=tl>${C.weeks.map((w,i)=>`<div style="--i:${i};--h:${i*20+15}"><b>Week ${i+1}</b>${w[0]}</div>`).join('')}</div>
 <div class=two><div class=card><h3>Assumptions</h3><ul class=pl>${C.assumptions.map(x=>`<li>${x}</li>`).join('')}</ul></div><div class=card><h3>Constraints</h3><ul class=pl>${C.constraints.map(x=>`<li>${x}</li>`).join('')}</ul></div></div>
 <p class=sub>These conditions are written once and apply to all user stories.</p>`,
-()=>`<div class=lk>${Object.entries(C.links).map(([k,v])=>v?`<a href="${v}" target="_blank" rel="noopener">${k}</a>`:`<span>${k}: link coming soon</span>`).join('')}</div><p class=sub style="margin-top:16px">All links are set to "Anyone with the link can view".</p>`,
+()=>`<div class=lk>${Object.entries(C.links).map(([k,v])=>v?`<a href="${v}" target="_blank" rel="noopener">${k}</a>`:`<span>${k}: Not available</span>`).join('')}</div><p class=sub style="margin-top:16px">All links are set to "Anyone with the link can view".</p>`,
 ()=>{const R=C.results,tot=i=>R.every(x=>x[i]==null)?null:R.reduce((a,x)=>a+(x[i]||0),0),
 s={stories:C.sum.stories,cases:tot(1),passed:tot(2),failed:tot(3),blocked:tot(4),bugs:tot(5)},
 t=(s.passed||0)+(s.failed||0)+(s.blocked||0),rate=t?Math.round(s.passed/t*100):null,L=2*Math.PI*54;let off=0;
@@ -446,7 +446,7 @@ const mx=Math.max(1,...R.map(x=>(x[2]||0)+(x[3]||0)+(x[4]||0))),mb=Math.max(1,..
 const rows=R.map(x=>{const p=x[2]||0,f=x[3]||0,b=x[4]||0;return `<div class=sr><span>${x[0]}</span><div class=sw><div class=bar style="width:${(p+f+b)/mx*100}%"><i style="flex:${p};background:#3F7D6B">${p||''}</i><i style="flex:${f};background:#A63D36">${f||''}</i><i style="flex:${b};background:#A8977A">${b||''}</i></div></div></div>`}).join('');
 const cols=R.map((x,i)=>`<div class=col><b>${x[5]==null?'-':x[5]}</b><div class=cw><i style="height:${(x[5]||0)/mb*100}%;--h:${i*28+20}"></i></div><span>${x[0]}</span></div>`).join('');
 return `${C.sample?'<p class=smp>Sample numbers: replace them in the CONFIG, then set sample to false.</p>':''}
-<div class=st><div class=card>${nb(s.stories)}User stories</div><div class=card>${nb(s.cases)}Test cases</div><div class=card>${nb(s.bugs)}Bugs found</div><div class=card><b>${rate==null?'Not filled':rate+'%'}</b>Pass rate</div></div>`+
+<div class=st><div class=card>${nb(s.stories)}User stories</div><div class=card>${nb(s.cases)}Test case rows</div><div class=card>${nb(s.bugs)}Bugs found</div><div class=card><b>${rate==null?'Not filled':rate+'%'}</b>Pass rate</div></div>`+
 (t?`<div class=two><div class=card><h3>Overall results</h3><div class=dn><svg viewBox="0 0 140 140" role="img" aria-label="Overall results">${seg}<text x="70" y="68" text-anchor="middle" class="dt">${rate}%</text><text x="70" y="86" text-anchor="middle" class="ds">passed</text></svg>
 <ul class=lg><li><i style="background:#3F7D6B"></i>Passed ${s.passed}</li><li><i style="background:#A63D36"></i>Failed ${s.failed}</li><li><i style="background:#A8977A"></i>Blocked ${s.blocked}</li></ul></div></div>
 <div class=card><h3>Results by area</h3>${rows}</div></div>
